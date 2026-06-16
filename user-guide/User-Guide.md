@@ -111,8 +111,8 @@ This will provide a much better chance of zero-stutter looping on this hardware.
 
 ---
 
-🄯 Ricky
+🄯 Ricky Ratliff
 
 AGPL-3.0
 
-view full source code & license:
+view full source code & license: [repo](https://github.com/ricky-ratliff/VHS)
