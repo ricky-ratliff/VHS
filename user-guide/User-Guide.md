@@ -1,4 +1,4 @@
-# VHS - Backline User Guide
+# VHS - User Guide
 
 ```html
            ┌────────────────────────────────────────────────────┐
@@ -19,12 +19,12 @@
 
 Contents
 
-- [VHS - Backline User Guide](#vhs---backline-user-guide)
+- [VHS - User Guide](#vhs---user-guide)
   - [About Video Hosting System (VHS)](#about-video-hosting-system-vhs)
   - [How to Use VHS](#how-to-use-vhs)
     - [Video \& Playlist Management](#video--playlist-management)
     - [VHS Dropbox Folder Layout](#vhs-dropbox-folder-layout)
-  - [Backline VHS TV Client Hardware](#backline-vhs-tv-client-hardware)
+  - [VHS TV Client Hardware](#vhs-tv-client-hardware)
     - [Sleep Mode](#sleep-mode)
     - [Acer CXI2 Supported Video Quality](#acer-cxi2-supported-video-quality)
     - [Specs](#specs)
@@ -75,7 +75,7 @@ Each TV client deployed with VHS is treated as **a complete VHS instance** with 
 
 > Dropbox allows syncing up to 3 devices for free. Adding a fourth VHS TV client will require a subscription.
 
-## Backline VHS TV Client Hardware
+## VHS TV Client Hardware
 
 ### Sleep Mode
 
@@ -107,7 +107,7 @@ This will provide a much better chance of zero-stutter looping on this hardware.
 - Storage: 16 GB (6 GB used, 6 GB avail. post-install)
 - Video: HDMI, DisplayPort
 - Networking: Ethernet, WiFi (802.11 AC)
-  - Using Backline Wi-Fi
+  - Using Wi-Fi
 
 ---
 

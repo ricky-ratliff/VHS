@@ -14,17 +14,7 @@ The VHS TV Client should have:
 - `Dropbox` app
 - `dropboxd` daemon
 
-Those are the tools the VHS stack depends on.
-
-## KDE Plasma Desktop Settings Screenshots
-
-### Power Management
-
-![alt](../img/power-management.png)
-
-### Screen Lock
-
-![alt](../img/screen-locking.png)
+Those are the tools the VHS TV client installer and runtime stack depend on.
 
 ## TV Client Config Checklist
 
@@ -40,7 +30,7 @@ Those are the tools the VHS stack depends on.
   - [ ] Software Update = manual, never, after rebooting
 - [ ] Install baseline packages
   - [ ] Install available firmware updates: `fwupdmgr get-updates`
-  - [ ] Install OS updatesss: `sudo apt update`
+  - [ ] Install OS updates: `sudo apt update`
   - [ ] `sudo apt install -y openssh-server inotify-tools mpv libappindicator3-1`
   - [ ] run `apt autoremove` to remove unnecessary packages
   - [ ] Delete the `/etc/mpv/mpv.conf` file to simplify mpv to one config file in `~/.config/mpv/mpv.conf`
