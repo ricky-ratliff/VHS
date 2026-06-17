@@ -50,12 +50,6 @@ Those are the tools the VHS stack depends on.
       - [ ] Run `~/.dropbox/dropboxd` and link account
       - [ ] Confirm System Settings > Autostart > Dropbox = running. Restart may be requried.
       - [ ] Preferences > Selective Sync > remove all except current TV client folder > Update
-- [ ] Install VHS
-  - [ ] ssh into client
-  - [ ] Run `sudo loginctl enable-linger` (allows user service persistence across user sessions)
-  - [ ] Create script `nano ~/vhs-client.sh`
-  - [ ] Paste contents
-  - [ ] Set permissions `chmod +x ~/vhs-client.sh`
-  - [ ] Run installer
-- [ ] Add owner's location Wi-Fi Connection
-- [ ] Tailscale & Tailscale SSH for remote management
+- [ ] Optional
+  - [ ] Add installed location Wi-Fi Connection
+  - [ ] Tailscale & Tailscale SSH for remote management

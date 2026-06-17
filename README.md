@@ -81,6 +81,7 @@ I also plan to bake all tv client [manual configs](./configs/tv-client-config.md
 ### TV Client Prerequisites
 
 - The MPV configuration must be compatible with your hardware. If you are not using the Acer Chromebox CXI2, verify the media codecs supported by your hardware (gpu) and adjust the MPV configuration accordingly.
+  - The [MPV manual](https://mpv.io/manual/master/) has usage examples to get you started quickly with any hardware.
 - Kubuntu 26.04 LTS is already installed.
 - KDE Plasma 6.6.4 is the desktop environment.
   - The session is running on Wayland through KWin.
@@ -93,18 +94,19 @@ I also plan to bake all tv client [manual configs](./configs/tv-client-config.md
 ### Installation Workflow
 
 1. Clone this repo onto your admin/management machine.
-2. Apply the manual configs referenced above to the TV client.
+2. Apply the [manual configs](./configs/tv-client-config.md) referenced above to the TV client.
 3. SSH into the client, create the `~/vhs-client.sh` file and copy the full script into it, then apply execute permissions for your user: `chmod +x ./vhs-client.sh`
-4. Run the installer script [vhs-client.sh](./vhs-client.sh) as regular user without sudo:
+4. Run `sudo loginctl enable-linger` (allows user service persistence across user sessions)
+5. Run the installer script [vhs-client.sh](./vhs-client.sh) as regular user without sudo:
 
     ```sh
     user@TV-XX$ ./vhs-client.sh
     ```
 
-5. Enter the TV number/hostname, such as `TV-02`.
-6. The script verifies that `~/Dropbox/VHS/TV-XX` exists.
-7. The script installs dependencies, configures mpv, and creates the VHS helper scripts and systemd user services.
-8. MPV should now loop the generated playlist in fullscreen if videos are present in the Dropbox `/media` folder for this client.
+6. Enter the TV number/hostname, such as `TV-02`.
+7. The script verifies that `~/Dropbox/VHS/TV-XX` exists.
+8. The script installs dependencies, configures mpv, and creates the VHS helper scripts and systemd user services.
+9. MPV should now loop the generated playlist in fullscreen if videos are present in the Dropbox `/media` folder for this client.
 
 #### Recommended Pre-Deployment Testing
 
