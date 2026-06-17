@@ -110,9 +110,8 @@ This will provide a much better chance of zero-stutter looping on this hardware.
   - Using Wi-Fi
 
 ---
+Developed for my friends at [Backline Music Hall ♡](https://www.backlinemusichall.com)
 
-🄯 Ricky Ratliff
+Full source code & license available at [github.](https://github.com/ricky-ratliff/VHS)
 
-AGPL-3.0
-
-view full source code & license: [repo](https://github.com/ricky-ratliff/VHS)
+🄯 2026 - Ricky Ratliff
