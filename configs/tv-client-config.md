@@ -34,15 +34,16 @@ Those are the tools the VHS stack depends on.
   - [ ] Select the Minimal installation to conserve limited storage space
   - [ ] Select the option to install available OS updates
 - [ ] System Settings
-  - [ ] Install available firmware updates: `fwupdmgr get-updates`
   - [ ] Power Management (disable idle suspend, screen dim/power off)
     - [ ] Power button = sleep
   - [ ] Screen Lock = never
   - [ ] Software Update = manual, never, after rebooting
 - [ ] Install baseline packages
-  - [ ] openssh-server, inotify-tools, mpv, libappindicator3-1
+  - [ ] Install available firmware updates: `fwupdmgr get-updates`
+  - [ ] Install OS updatesss: `sudo apt update`
+  - [ ] `sudo apt install -y openssh-server inotify-tools mpv libappindicator3-1`
   - [ ] run `apt autoremove` to remove unnecessary packages
-  - [ ] Delete the `/etc/mpv/mpv.conf` file to simplify mpv to one config file
+  - [ ] Delete the `/etc/mpv/mpv.conf` file to simplify mpv to one config file in `~/.config/mpv/mpv.conf`
   - [ ] Dropbox
     - [ ] Desktop app
     - [ ] Daemon

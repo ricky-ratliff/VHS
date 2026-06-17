@@ -17,16 +17,70 @@
                  〖VIDEO HOSTING SYSTEM〗
 ```
 
-VHS (Video Hosting System) is a simple digital signage client installer and runtime setup for Kubuntu 26.04 LTS running KDE Plasma 6.6.4 on Wayland. It uses a locally synced Dropbox folder structure to generate a playlist when the media folder contents change, and loops the playlist in fullscreen automatically through systemd user services without any user intervention on the TV client.
+VHS (Video Hosting System) is a simple digital signage client installer and runtime setup for Kubuntu 26.04 LTS running KDE Plasma 6.6.4 on Wayland. It uses a locally synced Dropbox folder structure to generate a playlist when the media folder contents change, and MPV loops the playlist in fullscreen automatically through systemd user services without any user intervention on the TV client.
 
 ## About This Version
 
 This version is designed to be run after Dropbox is already installed on the client and the [VHS folder structure](./README.md#vhs-dropbox-folder-layout) has already been created in Dropbox. The installer asks for the TV number (TV-XX), verifies the corresponding `~/Dropbox/VHS/TV-XX` exists locally, then creates the local scripts and systemd user services needed to keep playback running automatically.
 
+### Hardware Info
+
+VHS was built using this Acer Chromebox as the TV Client.
+
+- Make/Model: Acer Chromebox CXI2
+- Processor: Intel Celeron 3205U 1.5 GHz
+- GPU: Intel HD Graphics (Broadwell GT1)
+- RAM: 4 GB DDR3L SDRAM
+- Storage: 16 GB
+- Video: HDMI, DisplayPort
+- Networking: Ethernet, WiFi (802.11 AC)
+
+### Acer CXI2 Supported Video Quality
+
+1080p/H.264 is the safest target for reliable signage playback on this Chromebox. For reliable playback, use or re-encode video files to:
+
+- 1080p (or lower)
+- H.264
+- Moderate bitrate
+- Constant frame rate
+
+This will provide a much better chance of zero-stutter looping on this hardware.
+
+### OS Installation Hardware Prep
+
+Removed the Write Protect screw from the motherboard, followed the [Mr. Chromebox guides](https://docs.mrchromebox.tech/docs/boot-modes/recovery.html) to enable developer mode, remove ChromeOS, and enable new OS installation.
+
+#### OS Selection: Kubuntu 26.04 LTS (Minimal)
+
+The Dropbox tray icon needs a desktop environment that supports AppIndicator, which desktop apps use to display icons in the system tray. Not all desktop environments support AppIndicator natively.
+
+The following desktop environments generally support AppIndicator:
+
+- Unity
+- KDE Plasma
+
+Kubuntu provides the KDE Plasma DE on an Ubuntu base and the 26.04 Long Term Support (LTS) version is supported with security and maintenance updates, until April 2029.
+
+## Future Versions
+
+The current version requires a good bit of manual configuration. The ultimate goal is to have a streamlined client installation workflow with minimal manual tasks.
+
+### Script Updates
+
+I plan to implement the following changes to the `vhs-client.sh` script:
+
+- Interactive Dropbox installation using `dropboxd` command output
+- Automated Dropbox folder selective sync exclusion to remove unnecessary folders
+
+### Custom Installation Image (.iso)
+
+I also plan to bake all tv client [manual configs](./configs/tv-client-config.md) into an .iso installation image that don't require an interactive process (authentication), unique value (hostname). For those that do, I will provide a mechanism in the script to overwrite a default value provided by the image with a unique one provided interactively when running the script.
+
 ## Installation
 
 ### TV Client Prerequisites
 
+- The MPV configuration must be compatible with your hardware. If you are not using the Acer Chromebox CXI2, verify the media codecs supported by your hardware (gpu) and adjust the MPV configuration accordingly.
 - Kubuntu 26.04 LTS is already installed.
 - KDE Plasma 6.6.4 is the desktop environment.
   - The session is running on Wayland through KWin.
