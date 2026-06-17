@@ -1,27 +1,27 @@
 # VHS TV Client
 
 ```html
-           ┌────────────────────────────────────────────────────┐
-           │                                                    │
-           │`8.`888b           ,8'8 8888        8   d888888o.   │
-           │ `8.`888b         ,8' 8 8888        8 .`8888:' `88. │
-           │  `8.`888b       ,8'  8 8888        8 8.`8888.   Y8 │
-           │   `8.`888b     ,8'   8 8888        8 `8.`8888.     │
-           │    `8.`888b   ,8'    8 8888        8  `8.`8888.    │
-           │     `8.`888b ,8'     8 8888        8   `8.`8888.   │
-           │      `8.`888b8'      8 8888888888888    `8.`8888.  │
-           │       `8.`888'       8 8888        88b   `8.`8888. │
-           │        `8.`8'        8 8888        8`8b.  ;8.`8888 │
-           │         `8.`         8 8888        8 `Y8888P ,88P' │
-           └────────────────────────────────────────────────────┘
-                           〖VIDEO HOSTING SYSTEM〗
+ ┌────────────────────────────────────────────────────┐
+ │                                                    │
+ │`8.`888b           ,8'8 8888        8   d888888o.   │
+ │ `8.`888b         ,8' 8 8888        8 .`8888:' `88. │
+ │  `8.`888b       ,8'  8 8888        8 8.`8888.   Y8 │
+ │   `8.`888b     ,8'   8 8888        8 `8.`8888.     │
+ │    `8.`888b   ,8'    8 8888        8  `8.`8888.    │
+ │     `8.`888b ,8'     8 8888        8   `8.`8888.   │
+ │      `8.`888b8'      8 8888888888888    `8.`8888.  │
+ │       `8.`888'       8 8888        88b   `8.`8888. │
+ │        `8.`8'        8 8888        8`8b.  ;8.`8888 │
+ │         `8.`         8 8888        8 `Y8888P ,88P' │
+ └────────────────────────────────────────────────────┘
+                 〖VIDEO HOSTING SYSTEM〗
 ```
 
 VHS (Video Hosting System) is a simple digital signage client installer and runtime setup for Kubuntu 26.04 LTS running KDE Plasma 6.6.4 on Wayland. It uses a locally synced Dropbox folder structure to generate a playlist when the media folder contents change, and loops the playlist in fullscreen automatically through systemd user services without any user intervention on the TV client.
 
 ## About This Version
 
-This version is designed to be run after Dropbox is already installed on the client and the [VHS folder structure](./README.md#vhs-dropbox-folder-layout) has already been created in Dropbox. The installer asks for the TV number (TV-XX), verifies the corresponding `~/Dropbox/VHS/TV-XX` exists, then creates the local scripts and systemd user services needed to keep playback running automatically.
+This version is designed to be run after Dropbox is already installed on the client and the [VHS folder structure](./README.md#vhs-dropbox-folder-layout) has already been created in Dropbox. The installer asks for the TV number (TV-XX), verifies the corresponding `~/Dropbox/VHS/TV-XX` exists locally, then creates the local scripts and systemd user services needed to keep playback running automatically.
 
 ## Installation
 
@@ -30,25 +30,34 @@ This version is designed to be run after Dropbox is already installed on the cli
 - Kubuntu 26.04 LTS is already installed.
 - KDE Plasma 6.6.4 is the desktop environment.
   - The session is running on Wayland through KWin.
-- The [TV Client Manual Configurations](./configs/tv-client-config.md) have been applied.
-- The Dropbox desktop app and daemon have already been installed and signed in to manually.
+- The TV Client Manual Configurations have been applied. [See instructions.](./configs/tv-client-config.md)
+- The Dropbox desktop app and daemon have already been installed and signed in to manually. [See instructions.](./configs/dropbox-requirements.md)
   - The TV Dropbox folder already exists locally at `~/Dropbox/VHS/TV-XX`.
   - All other TV Dropbox folders have been excluded
-- The installer is run without root `(sudo)`.
+- The `vhs-client.sh` installer script is run without root `(sudo)`.
 
-### Installer Script Workflow
+### Installation Workflow
 
-1. Run the installer script [vhs-client.sh](./vhs-client.sh) as regular user without sudo:
+1. Clone this repo onto your admin/management machine.
+2. Apply the manual configs referenced above to the TV client.
+3. SSH into the client, create the `~/vhs-client.sh` file and copy the full script into it, then apply execute permissions for your user: `chmod +x ./vhs-client.sh`
+4. Run the installer script [vhs-client.sh](./vhs-client.sh) as regular user without sudo:
 
     ```sh
     user@TV-XX$ ./vhs-client.sh
     ```
 
-2. Enter the TV number, such as `TV-02`.
-3. The script verifies that `~/Dropbox/VHS/TV-XX` exists.
-4. The script installs dependencies, configures mpv, and creates the VHS helper scripts and systemd user services.
-5. The watcher keeps the playlist updated when media files change.
-6. MPV Loops the generated playlist in fullscreen.
+5. Enter the TV number/hostname, such as `TV-02`.
+6. The script verifies that `~/Dropbox/VHS/TV-XX` exists.
+7. The script installs dependencies, configures mpv, and creates the VHS helper scripts and systemd user services.
+8. MPV should now loop the generated playlist in fullscreen if videos are present in the Dropbox `/media` folder for this client.
+
+#### Recommended Pre-Deployment Testing
+
+- Change contents of the TV's media folder on Dropbox and verify mpv updates on the client
+- Close MPV to confirm it will restart itself after a crash
+- Press the power button and verify "sleep" functions as expected
+- Check mpv-kiosk.service logs for errors and resolve any if present
 
 ### What the installer creates
 
@@ -81,15 +90,17 @@ To confirm the codec, you can check with a tool like `ffprobe` on the command li
 
 #### Check MPV User Service Logs
 
-`journalctl --user -u tv-01-mpv-kiosk.service -b`
+Replace `XX` in the mpv-kiosk-service name with the current TV client ID. Look for errors, and use them to troubleshoot if present.
 
-#### 10 Most Recent Logs
+`journalctl --user -u tv-XX-mpv-kiosk.service -b`
 
-`journalctl --user -u tv-01-mpv-kiosk.service -b | tail`
+##### 10 Most Recent Logs
+
+`journalctl --user -u tv-XX-mpv-kiosk.service -b | tail`
 
 ### The script says the TV folder does not exist
 
-Make sure Dropbox is already installed, logged in, and syncing the correct VHS folder structure locally before running the script.
+Make sure Dropbox is already installed, logged in, and syncing the correct VHS folder structure locally before running the script again.
 
 #### VHS Dropbox Folder Layout
 
@@ -116,8 +127,35 @@ Each TV client uses its own folder, and the active client reads only its own `TV
 
 ### The watcher service starts, but mpv does not
 
-Check whether `playlist.m3u` exists and whether the service can access `/tmp/TV-XX-mpv.sock`. Also confirm that `systemctl --user status tv-xx-watch-playlist.service` and `tv-xx-mpv-kiosk.service` are both active.
+Check whether `playlist.m3u` exists and whether the service can access `/tmp/TV-XX-mpv.sock`. Also confirm that `tv-xx-watch-playlist.service` and `tv-xx-mpv-kiosk.service` are both active.
+
+#### User Service Status Command Syntax
+
+`systemctl --user status [SERVICENAME.SERVICE]`
+
+#### Healthy & Active Service Example
+
+```bash
+backline@TV-02:~$ systemctl --user status tv-02-watch-playlist.service 
+● tv-02-watch-playlist.service - TV-02 Dropbox playlist watcher
+     Loaded: loaded (/home/backline/.config/systemd/user/tv-02-watch-playlist.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-06-16 18:18:51 CDT; 1h 10min ago
+ Invocation: 723713e58ab54fa6924460aaea152ef3
+   Main PID: 937 (bash)
+      Tasks: 3 (limit: 3228)
+     Memory: 2.1M (peak: 3.2M)
+        CPU: 252ms
+     CGroup: /user.slice/user-1000.slice/user@1000.service/app.slice/tv-02-watch-playlist.service
+             ├─ 937 bash /home/backline/bin/TV-02/watch-playlist.sh
+             ├─1711 inotifywait -m -e create -e delete -e moved_to -e moved_from -e close_write /home/backline/Dropbox/VHS/TV-02/Now-Playing/media
+             └─1712 bash /home/backline/bin/TV-02/watch-playlist.sh
+
+Jun 16 18:18:51 TV-02 systemd[870]: Started tv-02-watch-playlist.service - TV-02 Dropbox playlist watcher.
+Jun 16 18:19:01 TV-02 watch-playlist.sh[1709]: {"data":{"playlist_entry_id":2},"request_id":0,"error":"success"}
+Jun 16 18:19:01 TV-02 watch-playlist.sh[1711]: Setting up watches.
+Jun 16 18:19:01 TV-02 watch-playlist.sh[1711]: Watches established.
+```
 
 ### Nothing starts after login
 
-Confirm that the services were enabled with `systemctl --user enable --now` and that the user session manager is running normally.
+Confirm that the services were enabled with `systemctl --user enable --now` and that the user session manager is running normally. Look for `preset: enabled` in the `Loaded:` section of the output of the `systemctl --user status [SERVICENAME.SERVICE]` command.
